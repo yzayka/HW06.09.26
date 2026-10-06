@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Past Tenses Practice & Town Mind Map</title>
+    <style>
+        :root {
+            --primary-color: #4A90E2;
+            --secondary-color: #F5A623;
+            --bg-color: #F4F7F6;
+            --text-color: #333;
+            --light-bg: #ffffff;
+            --correct-color: #27ae60;
+            --incorrect-color: #c0392b;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: var(--light-bg);
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            overflow: hidden;
+        }
+        .header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 20px 30px;
+            text-align: center;
+        }
+        .header h1 { margin: 0; font-size: 24px; }
+        .tabs {
+            display: flex;
+            background-color: #e0e7ee;
+        }
+        .tablinks {
+            flex: 1;
+            background-color: inherit;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 15px 20px;
+            transition: 0.3s;
+            font-size: 16px;
+            font-weight: bold;
+            color: #555;
+        }
+        .tablinks:hover { background-color: #d1dbe5; }
+        .tablinks.active {
+            background-color: var(--light-bg);
+            color: var(--primary-color);
+            border-bottom: 3px solid var(--primary-color);
+        }
+        .tabcontent {
+            display: none;
+            padding: 30px;
+            animation: fadeEffect 0.5s;
+        }
+        @keyframes fadeEffect {
+            from {opacity: 0;}
+            to {opacity: 1;}
+        }
+        .grammar-section, .practice-card {
+            background: #fafafa;
+            border-left: 4px solid var(--primary-color);
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+        }
+        .grammar-section h3 { color: var(--primary-color); margin-top: 0; }
+        .grammar-section { border-left-color: var(--secondary-color); }
+        .highlight { font-weight: bold; color: #d35400; }
+        
+        .timeline {
+            display: flex;
+            align-items: center;
+            margin: 20px 0;
+            padding: 20px;
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+        .tl-point {
+            text-align: center;
+            flex: 1;
+            position: relative;
+        }
+        .tl-point::after {
+            content: '';
+            position: absolute;
+            top: 25px;
+            left: 50%;
+            width: 100%;
+            height: 2px;
+            background: #ccc;
+            z-index: 1;
+        }
+        .tl-point:last-child::after { display: none; }
+        .tl-dot {
+            width: 16px;
+            height: 16px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            margin: 10px auto;
+            position: relative;
+            z-index: 2;
+        }
+        .tl-text { font-size: 14px; font-weight: bold; }
+        .tl-desc { font-size: 12px; color: #666; }
+        
+        .homework-practice { background: #fdf2e9; border-left-color: #e67e22; }
+        
+        input[type="text"] {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+            width: 150px;
+            margin: 0 5px;
+        }
+        
+        .radio-group { margin-bottom: 15px; }
+        .radio-option { display: block; margin: 5px 0 5px 20px; }
+        .question-text { font-weight: 500; margin-bottom: 10px; }
+        
+        .check-btn {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: 0.2s;
+        }
+        .check-btn:hover { background-color: #e6951c; }
+        .result { margin-top: 15px; font-weight: bold; font-size: 18px;}
+        .correct { color: var(--correct-color); }
+        .incorrect { color: var(--incorrect-color); }
+        
+        .explanation {
+            display: none;
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #fff3cd;
+            border-left: 4px solid #ffecb5;
+            color: #856404;
+            font-size: 14px;
+            border-radius: 4px;
+        }
+        
+        li { margin-bottom: 15px; }
+
+        /* СТИЛІ ДЛЯ MIND MAP */
+        .mindmap-intro {
+            text-align: center;
+            margin-bottom: 40px;
+            background: #fdfdfd;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            border: 1px solid #eee;
+        }
+        .mindmap-intro h3 { color: var(--primary-color); margin-top: 0; font-size: 22px;}
+        .mindmap-intro p { font-size: 16px; }
+        .highlight-instruction {
+            color: #d35400;
+            font-weight: bold;
+            font-size: 17px;
+            background: #fff3cd;
+            padding: 5px 10px;
+            border-radius: 4px;
+            display: inline-block;
+            margin-top: 10px;
+        }
+        .town-input-group {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        .town-input-group input {
+            width: 250px;
+            font-size: 18px;
+            padding: 10px 15px;
+            border: 2px solid var(--primary-color);
+            border-radius: 6px;
+            margin-left: 10px;
+            outline: none;
+        }
+        .town-input-group input:focus { border-color: var(--secondary-color); }
+
+        .mindmap-wrapper {
+            position: relative;
+            padding: 20px;
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            grid-template-rows: auto auto;
+            gap: 40px 60px;
+            align-items: stretch;
+        }
+
+        .mm-lines {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .mm-center {
+            grid-column: 2;
+            grid-row: 1 / span 2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2;
+        }
+        .mm-circle {
+            width: 160px;
+            height: 160px;
+            background-color: #16a085;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 20px;
+            text-align: center;
+            line-height: 1.2;
+            box-shadow: 0 5px 15px rgba(22, 160, 133, 0.4);
+            border: 6px solid white;
+            letter-spacing: 1px;
+        }
+
+        .mm-node {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            z-index: 2;
+            min-height: 220px;
+            overflow: hidden;
+            border: 1px solid #eaeaea;
+        }
+
+        .mm-header {
+            color: white;
+            padding: 12px 15px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 15px;
+            letter-spacing: 0.5px;
+        }
+        .mm-header span { font-size: 20px; }
+
+        .mm-origin .mm-header { background-color: #5b9bd5; }
+        .mm-people .mm-header { background-color: #7030a0; }
+        .mm-then .mm-header { background-color: #48c9b0; }
+        .mm-historic .mm-header { background-color: #70ad47; }
+
+        .mm-body {
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            background-color: #fcfcfc;
+        }
+
+        .mm-questions {
+            font-size: 13px;
+            color: #444;
+            margin-top: 0;
+            margin-bottom: 12px;
+            line-height: 1.5;
+            font-style: italic;
+        }
+
+        .mm-body textarea {
+            flex: 1;
+            min-height: 120px;
+            resize: vertical;
+            padding: 12px;
+            border: 1px solid #ced4da;
+            border-radius: 6px;
+            font-family: inherit;
+            font-size: 15px;
+            outline: none;
+            transition: border-color 0.2s;
+            background-color: #fff;
+        }
+        .mm-body textarea:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 5px rgba(74, 144, 226, 0.3);
+        }
+
+        /* КНОПКА ЗБЕРЕЖЕННЯ */
+        .download-section {
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 2px dashed #ccc;
+        }
+        .btn-download {
+            background-color: #27ae60;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .btn-download:hover {
+            background-color: #219653;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 10px rgba(0,0,0,0.15);
+        }
+        .btn-download:active {
+            transform: translateY(0);
+        }
+
+        @media (max-width: 850px) {
+            .mindmap-wrapper {
+                display: flex;
+                flex-direction: column;
+                gap: 20px;
+            }
+            .mm-lines { display: none; }
+            .mm-center { order: -1; margin-bottom: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <h1>Past Tenses Practice & Town Research</h1>
+        <p>Past Simple, Past Continuous & Past Perfect</p>
+    </div>
+
+    <div class="tabs">
+        <button class="tablinks active" onclick="openTab(event, 'Grammar')">1. Grammar Explanation</button>
+        <button class="tablinks" onclick="openTab(event, 'Exercises')">2. Exercises</button>
+        <button class="tablinks" onclick="openTab(event, 'Extra')">3. My Town (Mind Map)</button>
+    </div>
+
+    <!-- TAB 1: GRAMMAR EXPLANATION -->
+    <div id="Grammar" class="tabcontent" style="display:block;">
+        <div class="grammar-section">
+            <h3>1. Past Simple</h3>
+            <p><strong>When to use:</strong></p>
+            <ul>
+                <li>To describe the main events of a story.</li>
+                <li>For completed actions or events in the past.</li>
+                <li>To indicate a specific point in time when the action occurred.</li>
+            </ul>
+            <p><strong>Form:</strong> V2 (regular verbs: +ed, irregular verbs: 2nd column). <br><em>Negative:</em> didn't + V1.</p>
+            <p><em>Example:</em> Giorgio Armani <span class="highlight">studied</span> medicine in his 20s. Later, in the 1960s, he <span class="highlight">became</span> a fashion designer.</p>
+        </div>
+
+        <div class="grammar-section">
+            <h3>2. Past Continuous</h3>
+            <p><strong>When to use:</strong></p>
+            <ul>
+                <li>To give background information about events that happened at the same time as one or more main events.</li>
+                <li>To indicate an action that was in progress at a specific time in the past.</li>
+            </ul>
+            <p><strong>Form:</strong> was / were + Ving. <br><em>Negative:</em> wasn't / weren't + Ving.</p>
+            <p><em>Example:</em> Marie Curie received her second Nobel Prize in 1911, <span class="highlight">while she was working</span> at Sorbonne University.</p>
+            
+            <hr>
+            <h4>Time Markers: WHEN and WHILE</h4>
+            <p>We use <strong>when</strong> or <strong>while</strong> to introduce a background activity, or to show that two background activities happened at the same time.</p>
+            <ul>
+                <li><strong>While</strong> + long action (<span class="highlight">Past Continuous</span>).<br>
+                <em><span class="highlight">While</span> I <span class="highlight">was watching</span> TV, Jim knocked on the door.</em></li>
+                <li><strong>When</strong> + short action (<span class="highlight">Past Simple</span>). We use when (not while) to introduce the main event.<br>
+                <em><span class="highlight">When</span> Jim <span class="highlight">knocked</span> on the door, I was watching TV.</em></li>
+            </ul>
+        </div>
+
+        <div class="grammar-section">
+            <h3>3. Past Perfect</h3>
+            <p><strong>When to use:</strong></p>
+            <p>We use the past perfect to give information about background events that happened <strong>before</strong> the main events.</p>
+            <p><strong>Form:</strong> had + V3 (past participle). <br><em>Negative:</em> hadn't + V3.</p>
+            
+            <div class="timeline">
+                <div class="tl-point">
+                    <div class="tl-text">Past Perfect</div>
+                    <div class="tl-dot" style="background:#e74c3c;"></div>
+                    <div class="tl-desc">He <b>had written</b> 600 pieces of music...</div>
+                </div>
+                <div class="tl-point">
+                    <div class="tl-text">Past Simple</div>
+                    <div class="tl-dot"></div>
+                    <div class="tl-desc">...before Mozart <b>died</b> in 1791.</div>
+                </div>
+                <div class="tl-point">
+                    <div class="tl-text">Now</div>
+                    <div class="tl-dot" style="background:#2ecc71;"></div>
+                    <div class="tl-desc">Present</div>
+                </div>
+            </div>
+            
+            <p><em>Example:</em> When we met (Past Simple), I <span class="highlight">'d been</span> (Past Perfect) in the US for six months.</p>
+        </div>
+    </div>
+
+    <!-- TAB 2: EXERCISES -->
+    <div id="Exercises" class="tabcontent">
+        
+        <!-- Part 1: Multiple Choice -->
+        <div class="practice-card">
+            <h3>Part 1: Choose the correct option</h3>
+            
+            <div class="radio-group" id="q1">
+                <div class="question-text">1. I was very late. When I arrived, the conference _____.</div>
+                <label class="radio-option"><input type="radio" name="q1" value="A"> A. was already starting</label>
+                <label class="radio-option"><input type="radio" name="q1" value="B"> B. started</label>
+                <label class="radio-option"><input type="radio" name="q1" value="C"> C. had already started</label>
+                <div class="explanation" id="exp1"><strong>Incorrect.</strong> The conference started <em>before</em> you arrived. We use Past Perfect for an action completed before another action in the past. Correct answer: C. had already started.</div>
+            </div>
+
+            <div class="radio-group" id="q2">
+                <div class="question-text">2. When he heard the police knocking on the door, he ____ under the bed.</div>
+                <label class="radio-option"><input type="radio" name="q2" value="A"> A. hid</label>
+                <label class="radio-option"><input type="radio" name="q2" value="B"> B. had hidden</label>
+                <label class="radio-option"><input type="radio" name="q2" value="C"> C. was hiding</label>
+                <div class="explanation" id="exp2"><strong>Incorrect.</strong> He hid <em>after</em> he heard the knock. These are consecutive actions in a story. We use Past Simple for consecutive actions. Correct answer: A. hid.</div>
+            </div>
+
+            <div class="radio-group" id="q3">
+                <div class="question-text">3. The police arrested him because he _____ a gun.</div>
+                <label class="radio-option"><input type="radio" name="q3" value="A"> A. carried</label>
+                <label class="radio-option"><input type="radio" name="q3" value="B"> B. was carrying</label>
+                <label class="radio-option"><input type="radio" name="q3" value="C"> C. had carried</label>
+                <div class="explanation" id="exp3"><strong>Incorrect.</strong> He was in the process of carrying a gun at the moment they arrested him. This is background information for a specific time in the past. Correct answer: B. was carrying.</div>
+            </div>
+
+            <div class="radio-group" id="q4">
+                <div class="question-text">4. When they arrived at the police station, he said that he _____ anything wrong.</div>
+                <label class="radio-option"><input type="radio" name="q4" value="A"> A. didn't do</label>
+                <label class="radio-option"><input type="radio" name="q4" value="B"> B. wasn't doing</label>
+                <label class="radio-option"><input type="radio" name="q4" value="C"> C. hadn't done</label>
+                <div class="explanation" id="exp4"><strong>Incorrect.</strong> He didn't do anything wrong <em>before</em> they arrived at the station. We use Past Perfect for actions that happened before another past action. Correct answer: C. hadn't done.</div>
+            </div>
+
+            <div class="radio-group" id="q5">
+                <div class="question-text">5. When he said that he loved me, I knew that he _____.</div>
+                <label class="radio-option"><input type="radio" name="q5" value="A"> A. lied</label>
+                <label class="radio-option"><input type="radio" name="q5" value="B"> B. was lying</label>
+                <label class="radio-option"><input type="radio" name="q5" value="C"> C. had lied</label>
+                <div class="explanation" id="exp5"><strong>Incorrect.</strong> He was in the process of telling a lie exactly at the moment he said "I love you". We use Past Continuous for an action in progress. Correct answer: B. was lying.</div>
+            </div>
+
+            <div class="radio-group" id="q6">
+                <div class="question-text">6. I looked at him and I knew he _____ in a fight, because he had a black eye.</div>
+                <label class="radio-option"><input type="radio" name="q6" value="A"> A. was</label>
+                <label class="radio-option"><input type="radio" name="q6" value="B"> B. was being</label>
+                <label class="radio-option"><input type="radio" name="q6" value="C"> C. had been</label>
+                <div class="explanation" id="exp6"><strong>Incorrect.</strong> The fight happened <em>before</em> you looked at him. We use Past Perfect for an action that happened before another past event. Correct answer: C. had been.</div>
+            </div>
+
+            <div class="radio-group" id="q7">
+                <div class="question-text">7. He pulled out a gun and everybody _____ away.</div>
+                <label class="radio-option"><input type="radio" name="q7" value="A"> A. ran</label>
+                <label class="radio-option"><input type="radio" name="q7" value="B"> B. was running</label>
+                <label class="radio-option"><input type="radio" name="q7" value="C"> C. had run</label>
+                <div class="explanation" id="exp7"><strong>Incorrect.</strong> First he pulled out a gun, then everybody ran away. These are consecutive events in a sequence. We use Past Simple. Correct answer: A. ran.</div>
+            </div>
+
+            <div class="radio-group" id="q8">
+                <div class="question-text">8. When I was a child, we _____ anywhere at weekends; it was boring.</div>
+                <label class="radio-option"><input type="radio" name="q8" value="A"> A. never went</label>
+                <label class="radio-option"><input type="radio" name="q8" value="B"> B. were never going</label>
+                <label class="radio-option"><input type="radio" name="q8" value="C"> C. had never gone</label>
+                <div class="explanation" id="exp8"><strong>Incorrect.</strong> This describes a repeated habit or state in the past. We use Past Simple for past habits. Correct answer: A. never went.</div>
+            </div>
+
+            <div class="radio-group" id="q9">
+                <div class="question-text">9. When he retired he _____ in the company for more than 50 years.</div>
+                <label class="radio-option"><input type="radio" name="q9" value="A"> A. was</label>
+                <label class="radio-option"><input type="radio" name="q9" value="B"> B. was being</label>
+                <label class="radio-option"><input type="radio" name="q9" value="C"> C. had been</label>
+                <div class="explanation" id="exp9"><strong>Incorrect.</strong> He worked there for 50 years <em>up to the point</em> when he retired. We use Past Perfect to talk about a duration leading up to a point in the past. Correct answer: C. had been.</div>
+            </div>
+
+            <div class="radio-group" id="q10">
+                <div class="question-text">10. I _____ to the road and we crashed.</div>
+                <label class="radio-option"><input type="radio" name="q10" value="A"> A. didn't pay attention</label>
+                <label class="radio-option"><input type="radio" name="q10" value="B"> B. wasn't paying attention</label>
+                <label class="radio-option"><input type="radio" name="q10" value="C"> C. hadn't paid attention</label>
+                <div class="explanation" id="exp10"><strong>Incorrect.</strong> Not paying attention was an ongoing action (background event) when the sudden short action (crashed) interrupted it. Correct answer: B. wasn't paying attention.</div>
+            </div>
+            
+            <button class="check-btn" onclick="checkPart1()">Check Answers</button>
+            <div id="part1-result" class="result"></div>
+        </div>
+
+        <!-- Part 2: Fill in the gaps -->
+        <div class="practice-card homework-practice">
+            <h3>Part 2: A Mysterious Night</h3>
+            
+            <p>Complete the story with the correct forms (Past Simple, Past Continuous, or Past Perfect).</p>
+            <p>
+                Last night, I <strong>1)</strong> <input type="text" id="extra1" placeholder="(walk)"> home from work. 
+                <span class="explanation" id="exp_extra1"><strong>Incorrect.</strong> This sets the scene/background. The action was in progress. Use Past Continuous (was walking).</span>
+                
+                The wind <strong>2)</strong> <input type="text" id="extra2" placeholder="(blow)"> and it was raining. 
+                <span class="explanation" id="exp_extra2"><strong>Incorrect.</strong> Another background action happening at the same time as walking. Use Past Continuous (was blowing).</span>
+                
+                Suddenly, I <strong>3)</strong> <input type="text" id="extra3" placeholder="(see)"> a strange light in the sky. 
+                <span class="explanation" id="exp_extra3"><strong>Incorrect.</strong> This is a sudden short action that interrupted the walking. Use Past Simple (saw).</span>
+                
+                I <strong>4)</strong> <input type="text" id="extra4" placeholder="(never / see)"> anything like it before! 
+                <span class="explanation" id="exp_extra4"><strong>Incorrect.</strong> This refers to the time *before* the moment you saw the light. Use Past Perfect (had never seen).</span>
+                
+                While I <strong>5)</strong> <input type="text" id="extra5" placeholder="(look)"> at it, it suddenly <strong>6)</strong> <input type="text" id="extra6" placeholder="(disappear)">. 
+                <span class="explanation" id="exp_extra5"><strong>Incorrect (5).</strong> "While" introduces a long action in progress. Use Past Continuous (was looking).</span>
+                <span class="explanation" id="exp_extra6"><strong>Incorrect (6).</strong> The disappearance is a sudden short action that happened while you were looking. Use Past Simple (disappeared).</span>
+                
+                I <strong>7)</strong> <input type="text" id="extra7" placeholder="(realize)"> that I <strong>8)</strong> <input type="text" id="extra8" placeholder="(forget)"> to take a photo.
+                <span class="explanation" id="exp_extra7"><strong>Incorrect (7).</strong> You realized this after it disappeared. A completed main event. Use Past Simple (realized).</span>
+                <span class="explanation" id="exp_extra8"><strong>Incorrect (8).</strong> You forgot *before* the moment you realized it. Use Past Perfect (had forgotten).</span>
+            </p>
+            
+            <button class="check-btn" onclick="checkPart2()">Check Answers</button>
+            <div id="part2-result" class="result"></div>
+        </div>
+
+    </div>
+
+    <!-- TAB 3: EXTRA (MIND MAP) -->
+    <div id="Extra" class="tabcontent">
+        
+        <div class="mindmap-intro">
+            <h3>Research Project: The Story of My Town</h3>
+            <p>Оберіть місто, в якому ви живете, яке вам дуже подобається або яке б ви хотіли відвідати. Дослідіть його та заповніть цю мисленнєву карту (mind map). Дайте письмові відповіді на питання в кожному з чотирьох розділів.</p>
+            <div class="highlight-instruction">Будь ласка, давайте максимально розгорнуті та детальні відповіді! (Please provide expanded and detailed answers).</div>
+            
+            <div class="town-input-group">
+                <label for="townName">My chosen town/city is:</label>
+                <input type="text" id="townName" placeholder="e.g. London, Lviv, New York...">
+            </div>
+        </div>
+
+        <div class="mindmap-wrapper">
+            <!-- SVG Лінії з'єднання -->
+            <svg class="mm-lines" preserveAspectRatio="none">
+                <line x1="50%" y1="50%" x2="25%" y2="25%" stroke="#16a085" stroke-width="3" stroke-dasharray="5,5" />
+                <line x1="50%" y1="50%" x2="75%" y2="25%" stroke="#16a085" stroke-width="3" stroke-dasharray="5,5" />
+                <line x1="50%" y1="50%" x2="25%" y2="75%" stroke="#16a085" stroke-width="3" stroke-dasharray="5,5" />
+                <line x1="50%" y1="50%" x2="75%" y2="75%" stroke="#16a085" stroke-width="3" stroke-dasharray="5,5" />
+            </svg>
+
+            <!-- БЛОК 1: Origin and Growth -->
+            <div class="mm-node mm-origin">
+                <div class="mm-header"><span>📍</span> ORIGIN AND GROWTH</div>
+                <div class="mm-body">
+                    <p class="mm-questions">
+                        • When and how did it start?<br>
+                        • How and why did it grow?
+                    </p>
+                    <textarea placeholder="Write your detailed answer here..."></textarea>
+                </div>
+            </div>
+
+            <!-- БЛОК 2: People -->
+            <div class="mm-node mm-people">
+                <div class="mm-header"><span>👤</span> PEOPLE</div>
+                <div class="mm-body">
+                    <p class="mm-questions">
+                        • What famous people were connected with the town?<br>
+                        • How? Why? Where? When?
+                    </p>
+                    <textarea placeholder="Write your detailed answer here..."></textarea>
+                </div>
+            </div>
+
+            <!-- ЦЕНТР -->
+            <div class="mm-center">
+                <div class="mm-circle">THE STORY<br>OF<br>MY TOWN</div>
+            </div>
+
+            <!-- БЛОК 3: Then and Now -->
+            <div class="mm-node mm-then">
+                <div class="mm-header"><span>🏢</span> THEN AND NOW</div>
+                <div class="mm-body">
+                    <p class="mm-questions">
+                        • Which buildings and streets have changed?<br>
+                        • What were these places like in the past?
+                    </p>
+                    <textarea placeholder="Write your detailed answer here..."></textarea>
+                </div>
+            </div>
+
+            <!-- БЛОК 4: Historic Sites -->
+            <div class="mm-node mm-historic">
+                <div class="mm-header"><span>🏰</span> HISTORIC SITES</div>
+                <div class="mm-body">
+                    <p class="mm-questions">
+                        • Where are they?<br>
+                        • Why are they important?
+                    </p>
+                    <textarea placeholder="Write your detailed answer here..."></textarea>
+                </div>
+            </div>
+        </div>
+
+        <!-- Кнопка збереження та завантаження -->
+        <div class="download-section">
+            <p style="font-size: 16px; color: #666; margin-bottom: 15px;">Коли всі завдання та тести виконано, збережіть файл, щоб надіслати вчителю.</p>
+            <button class="btn-download" onclick="saveAndDownload()">
+                <span>💾</span> Зберегти і завантажити (Save & Download)
+            </button>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    function openTab(evt, tabName) {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+        tablinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+        document.getElementById(tabName).style.display = "block";
+        evt.currentTarget.className += " active";
+    }
+
+    function checkPart1() {
+        const answers = {
+            q1: "C", q2: "A", q3: "B", q4: "C", q5: "B",
+            q6: "C", q7: "A", q8: "A", q9: "C", q10: "B"
+        };
+        
+        let score = 0;
+        let allAnswered = true;
+
+        for (let i = 1; i <= 10; i++) {
+            let radios = document.getElementsByName('q' + i);
+            let answered = false;
+            let val = "";
+            for (let j = 0; j < radios.length; j++) {
+                if (radios[j].checked) {
+                    answered = true;
+                    val = radios[j].value;
+                    break;
+                }
+            }
+            
+            if (!answered) {
+                allAnswered = false;
+                continue;
+            }
+
+            let expDiv = document.getElementById('exp' + i);
+            let qDiv = document.getElementById('q' + i);
+            
+            if (val === answers['q' + i]) {
+                score++;
+                expDiv.style.display = "none";
+                qDiv.style.borderLeft = "4px solid var(--correct-color)";
+                qDiv.style.paddingLeft = "10px";
+            } else {
+                expDiv.style.display = "block";
+                qDiv.style.borderLeft = "4px solid var(--incorrect-color)";
+                qDiv.style.paddingLeft = "10px";
+            }
+        }
+
+        let res = document.getElementById('part1-result');
+        if (!allAnswered) {
+             res.innerHTML = "Please answer all questions.";
+             res.className = "result incorrect";
+             return;
+        }
+
+        if (score === 10) {
+            res.innerHTML = "Perfect! 10/10. 🎉";
+            res.className = "result correct";
+        } else {
+            res.innerHTML = `You got ${score} out of 10. Read the explanations below the incorrect answers.`;
+            res.className = "result incorrect";
+        }
+    }
+
+    function checkPart2() {
+        const answers = [
+            "was walking", "was blowing", "saw", 
+            "had never seen", "was looking", "disappeared", "realized",
+            "had forgotten"
+        ];
+        
+        let score = 0;
+        for(let i=1; i<=8; i++) {
+            let inputField = document.getElementById('extra'+i);
+            let expField = document.getElementById('exp_extra'+i);
+            
+            let input = inputField.value.toLowerCase().replace(/\s+/g, ' ').trim();
+            
+            if(input === answers[i-1]) {
+                score++;
+                inputField.style.borderColor = "var(--correct-color)";
+                expField.style.display = "none";
+            } else {
+                inputField.style.borderColor = "var(--incorrect-color)";
+                expField.style.display = "block";
+            }
+        }
+        
+        let res = document.getElementById('part2-result');
+        if(score === 8) {
+            res.innerHTML = "Fantastic! You solved the mystery perfectly. 🕵️‍♀️✨";
+            res.className = "result correct";
+        } else {
+            res.innerHTML = `Correct answers: ${score} out of 8. Review the explanations below the text fields.`;
+            res.className = "result incorrect";
+        }
+    }
+
+    // Функція для збереження і завантаження HTML з внесеними змінами
+    function saveAndDownload() {
+        // 1. Фіксуємо значення всіх текстових полів (input type="text") в атрибут 'value'
+        const textInputs = document.querySelectorAll('input[type="text"]');
+        textInputs.forEach(input => {
+            input.setAttribute('value', input.value);
+        });
+
+        // 2. Фіксуємо значення всіх радіокнопок
+        const radioInputs = document.querySelectorAll('input[type="radio"]');
+        radioInputs.forEach(radio => {
+            if (radio.checked) {
+                radio.setAttribute('checked', 'checked');
+            } else {
+                radio.removeAttribute('checked');
+            }
+        });
+
+        // 3. Фіксуємо значення всіх текстових областей (textarea) всередину тегу
+        const textAreas = document.querySelectorAll('textarea');
+        textAreas.forEach(ta => {
+            ta.innerHTML = ta.value;
+        });
+
+        // 4. Формуємо назву файлу (якщо місто не вказане, файл назветься Project_My_Town.html)
+        const townNameInput = document.getElementById('townName').value.trim();
+        const safeTownName = townNameInput ? townNameInput.replace(/[^a-zA-Z0-9а-яА-ЯіІїЇєЄґҐ]/g, '_') : 'My_Town';
+        const filename = `Project_${safeTownName}.html`;
+
+        // 5. Отримуємо весь HTML сторінки
+        const htmlContent = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+
+        // 6. Створюємо файл для завантаження
+        const blob = new Blob([htmlContent], { type: 'text/html;charset=utf-8' });
+        const downloadLink = document.createElement('a');
+        downloadLink.href = URL.createObjectURL(blob);
+        downloadLink.download = filename;
+        
+        // 7. Симулюємо клік по посиланню, щоб викликати діалог збереження браузера
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+        document.body.removeChild(downloadLink);
+    }
+</script>
+
+</body>
+</html>
